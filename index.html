@@ -1,0 +1,64 @@
+
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+<script>
+  AFRAME.registerComponent('change-modelApple', {
+    init: function () {
+      this.el.addEventListener('click', () => {
+	document.getElementById('mensaje').innerText =
+          '🟢 ¡Toque detectado en la manzana!';
+        this.el.setAttribute('src', '#peachModel');
+      });
+    }
+  });
+
+  AFRAME.registerComponent('change-modelPumpkin', {
+    init: function () {
+      this.el.addEventListener('click', () => {
+	 document.getElementById('mensaje').innerText =
+          '🟢 ¡Toque detectado en la calabaza!';
+        this.el.setAttribute('src', '#tomatoModel');
+      });
+    }
+  });
+</script>
+  </head>
+  <body>
+	<div id="mensaje"
+     style="
+       position: fixed;
+       top: 20px;
+       left: 20px;
+       z-index: 9999;
+       background: white;
+       padding: 10px;
+       font-family: Arial;
+       font-size: 16px;
+     ">
+  Esperando toque...
+</div>
+	
+    <a-scene mindar-image="imageTargetSrc: ./multiMarker.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <a-assets>
+        <a-asset-item id="appleModel" src="./apple.glb"></a-asset-item>
+	<a-asset-item id="peachModel" src="./peach.glb"></a-asset-item>
+        <a-asset-item id="pumpkinModel" src="./pumpkin.glb"></a-asset-item>
+	<a-asset-item id="tomatoModel" src="./tomato.glb"></a-asset-item>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="rayOrigin: mouse" raycaster="objects: .clickable" ></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-gltf-model class="clickable" change-modelApple rotation="0 0 0 " position="0 0 0" scale="0.003 0.003 0.005" src="#appleModel" animation-mixer></a-gltf-model>
+      </a-entity>
+      <a-entity mindar-image-target="targetIndex: 1">
+        <a-gltf-model class="clickable" change-modelPumpkin rotation="0 0 0 " position="0 0 0" scale="0.005 0.005 0.005" src="#pumpkinModel" animation-mixer></a-gltf-model>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
