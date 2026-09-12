@@ -1,0 +1,131 @@
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const appleHitbox = document.querySelector('#apple-hitbox');
+      const appleModel = document.querySelector('#apple-model');
+
+      appleHitbox.addEventListener('click', () => {
+        appleModel.setAttribute('src', '#peachModel');
+
+	appleModel.setAttribute('position', '0 0 0');
+  	appleModel.setAttribute('rotation', '0 0 0');
+  	appleModel.setAttribute('scale', '0.003 0.003 0.005');
+	
+      });
+
+      const pumpkinHitbox = document.querySelector('#pumpkin-hitbox');
+      const pumpkinModel = document.querySelector('#pumpkin-model');
+
+      pumpkinHitbox.addEventListener('click', () => {
+        pumpkinModel.setAttribute('src', '#tomatoModel');
+
+	pumpkinModel.setAttribute('position', '0 0 0');
+  	pumpkinModel.setAttribute('rotation', '0 0 0');
+  	pumpkinModel.setAttribute('scale', '0.005 0.005 0.005');
+      });
+
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <a-scene
+    mindar-image="imageTargetSrc: ./multiMarker.mind;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
+
+    <a-assets>
+
+      <a-asset-item
+        id="appleModel"
+        src="./apple.glb">
+      </a-asset-item>
+
+      <a-asset-item
+        id="peachModel"
+        src="./peach.glb">
+      </a-asset-item>
+
+      <a-asset-item
+        id="pumpkinModel"
+        src="./pumpkin.glb">
+      </a-asset-item>
+
+      <a-asset-item
+        id="tomatoModel"
+        src="./tomato.glb">
+      </a-asset-item>
+
+    </a-assets>
+    <a-camera
+      position="0 0 0"
+      look-controls="enabled: false"
+      cursor="fuse: false; rayOrigin: mouse;"
+      raycaster="near: 0; far: 10000; objects: .clickable">
+    </a-camera>
+    <a-entity
+      id="apple-target"
+      mindar-image-target="targetIndex: 0">
+
+      <a-gltf-model
+        id="apple-model"
+        rotation="0 0 0"
+        position="0 0 0"
+        scale="0.003 0.003 0.005"
+        src="#appleModel"
+        animation-mixer>
+      </a-gltf-model>
+
+      <a-plane
+        id="apple-hitbox"
+        class="clickable"
+        position="0 0 0"
+        rotation="0 0 0"
+        width="1"
+        height="1"
+        material="transparent: true; opacity: 0.5; color: blue">
+      </a-plane>
+
+    </a-entity>
+    <a-entity
+      id="pumpkin-target"
+      mindar-image-target="targetIndex: 1">
+
+      <a-gltf-model
+        id="pumpkin-model"
+        rotation="0 0 0"
+        position="0 0 0"
+        scale="0.005 0.005 0.005"
+        src="#pumpkinModel"
+        animation-mixer>
+      </a-gltf-model>
+      <a-plane
+        id="pumpkin-hitbox"
+        class="clickable"
+        position="0 0 0"
+        rotation="0 0 0"
+        width="1"
+        height="1"
+        material="transparent: true; opacity: 0">
+      </a-plane>
+
+    </a-entity>
+
+  </a-scene>
+</body>
+</html>
